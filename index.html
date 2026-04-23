@@ -1,50 +1,268 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video</title>
+  <title>आओ मंदिर चलें</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Noto+Sans+Devanagari:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --saffron: #FF6B00;
+      --gold: #FFD700;
+      --deep-red: #8B0000;
+      --cream: #FFF8E7;
+      --dark: #1a0a00;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      flex-direction: column;
-    }
-    video {
-      max-width: 100%;
-      max-height: 100vh;
-    }
-    #tap-msg {
-      color: white;
-      font-size: 22px;
-      font-family: Arial, sans-serif;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.75);
+      background: var(--dark);
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: hidden;
+      font-family: 'Noto Sans Devanagari', sans-serif;
+    }
+
+    /* Animated background */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(255,107,0,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(139,0,0,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.06) 0%, transparent 70%),
+        #1a0a00;
+    }
+
+    /* Floating diyas */
+    .diya {
+      position: fixed;
+      font-size: 28px;
+      animation: floatDiya 6s ease-in-out infinite;
+      z-index: 1;
+      opacity: 0.5;
+    }
+    .diya:nth-child(1) { top: 8%; left: 5%; animation-delay: 0s; }
+    .diya:nth-child(2) { top: 15%; right: 6%; animation-delay: 1.5s; }
+    .diya:nth-child(3) { bottom: 20%; left: 4%; animation-delay: 3s; }
+    .diya:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 4.5s; }
+
+    @keyframes floatDiya {
+      0%, 100% { transform: translateY(0px) rotate(-5deg); }
+      50% { transform: translateY(-18px) rotate(5deg); }
+    }
+
+    /* Main wrapper */
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 860px;
+      padding: 40px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* OM Symbol */
+    .om {
+      font-size: 72px;
+      color: var(--gold);
+      text-shadow: 0 0 30px rgba(255,215,0,0.8), 0 0 60px rgba(255,107,0,0.5);
+      animation: pulse 3s ease-in-out infinite;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 30px rgba(255,215,0,0.8), 0 0 60px rgba(255,107,0,0.5); transform: scale(1); }
+      50% { text-shadow: 0 0 50px rgba(255,215,0,1), 0 0 100px rgba(255,107,0,0.8); transform: scale(1.05); }
+    }
+
+    /* Decorative line top */
+    .decor-line {
+      width: 80%;
+      max-width: 500px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--saffron), var(--gold), transparent);
+      margin: 12px 0;
+      border-radius: 2px;
+    }
+
+    /* Main Heading */
+    .main-heading {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: clamp(52px, 10vw, 88px);
+      font-weight: 400;
+      color: var(--gold);
+      text-align: center;
+      line-height: 1.2;
+      letter-spacing: 3px;
+      text-shadow: 
+        0 0 20px rgba(255,215,0,0.9),
+        0 0 40px rgba(255,107,0,0.7),
+        0 0 80px rgba(255,107,0,0.4),
+        3px 3px 0px rgba(139,0,0,0.6);
+      animation: shimmer 4s ease-in-out infinite;
+      margin: 8px 0 4px;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { color: #FFD700; }
+      50% { color: #FFF0A0; }
+    }
+
+    /* Sub text */
+    .sub-text {
+      font-size: clamp(16px, 3vw, 22px);
+      color: #ffb347;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 6px;
+      opacity: 0.9;
+    }
+
+    /* Flower row */
+    .flowers {
+      font-size: 26px;
+      letter-spacing: 8px;
+      margin: 8px 0 24px;
+      animation: sway 3s ease-in-out infinite;
+    }
+
+    @keyframes sway {
+      0%, 100% { letter-spacing: 8px; }
+      50% { letter-spacing: 12px; }
+    }
+
+    /* Tap overlay */
+    #tap-msg {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,3,0,0.88);
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      z-index: 10;
+      z-index: 100;
+      gap: 16px;
+    }
+
+    #tap-msg .tap-icon {
+      font-size: 64px;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    #tap-msg .tap-text {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: clamp(22px, 5vw, 36px);
+      color: var(--gold);
+      text-align: center;
+      text-shadow: 0 0 20px rgba(255,215,0,0.8);
+      padding: 0 20px;
+    }
+
+    #tap-msg .tap-sub {
+      font-size: 15px;
+      color: #ffb347;
+      letter-spacing: 3px;
+    }
+
+    /* Video container */
+    .video-container {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255,215,0,0.3);
+      box-shadow: 
+        0 0 0 1px rgba(255,107,0,0.2),
+        0 0 40px rgba(255,107,0,0.3),
+        0 0 80px rgba(255,107,0,0.15),
+        inset 0 0 40px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .video-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,107,0,0.08) 0%, transparent 30%, transparent 70%, rgba(255,107,0,0.08) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    video {
+      width: 100%;
+      display: block;
+      border-radius: 14px;
+    }
+
+    /* Bottom blessing */
+    .blessing {
+      margin-top: 28px;
+      text-align: center;
+      color: rgba(255,215,0,0.6);
+      font-size: 15px;
+      letter-spacing: 2px;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
 
-  <div id="tap-msg">🔊 माता सीता को पुष्प अर्पित करने के लिए यहाँ क्लिक करें 🌸</div>
+  <div class="bg"></div>
 
-  <video 
-    id="myvideo"
-    src="maa-sita-video.mp4"
-    loop
-    playsinline
-    controls
-    style="width:100%; max-width:900px;"
-  ></video>
+  <!-- Floating diyas -->
+  <div class="diya">🪔</div>
+  <div class="diya">🪔</div>
+  <div class="diya">🪔</div>
+  <div class="diya">🪔</div>
+
+  <!-- Tap to play overlay -->
+  <div id="tap-msg">
+    <div class="tap-icon">🔊</div>
+    <div class="tap-text">माता सीता को पुष्प अर्पित करने के लिए यहाँ क्लिक करें 🌸</div>
+  </div>
+
+  <div class="wrapper">
+
+    <div class="om">ॐ</div>
+
+    <div class="decor-line"></div>
+
+    <h1 class="main-heading">आओ मंदिर चलें</h1>
+
+    <div class="sub-text">🙏 🙏</div>
+
+    <div class="flowers">🌸 🌼 🌺 🌼 🌸</div>
+
+    <div class="video-container">
+      <video 
+        id="myvideo"
+        src="maa-sita-video.mp4"
+        loop
+        playsinline
+        controls
+      ></video>
+    </div>
+
+    <div class="blessing">॥ जय माता दी ॥</div>
+
+  </div>
 
   <script>
     const video = document.getElementById('myvideo');
