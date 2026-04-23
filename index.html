@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    video {
+      max-width: 100%;
+      max-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <video 
+    src="WhatsApp_Video_2026-04-23_at_11_08_43_AM.mp4"
+    autoplay
+    loop
+    playsinline
+    controls
+    style="width:100%; max-width:900px;"
+  ></video>
+
+  <script>
+    // Force play with audio on user interaction
+    const video = document.querySelector('video');
+    video.muted = false;
+    
+    document.addEventListener('click', () => {
+      video.muted = false;
+      video.play();
+    }, { once: true });
+
+    video.play().catch(() => {
+      // Autoplay blocked, wait for click
+      video.muted = true;
+      video.play();
+    });
+  </script>
+</body>
+</html>
