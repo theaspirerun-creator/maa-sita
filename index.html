@@ -12,17 +12,34 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      flex-direction: column;
     }
     video {
       max-width: 100%;
       max-height: 100vh;
     }
+    #tap-msg {
+      color: white;
+      font-size: 22px;
+      font-family: Arial, sans-serif;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
+
+  <div id="tap-msg">🔊 Tap anywhere to play with Sound</div>
+
   <video 
+    id="myvideo"
     src="maa-sita-video.mp4"
-    autoplay
     loop
     playsinline
     controls
@@ -30,20 +47,15 @@
   ></video>
 
   <script>
-    // Force play with audio on user interaction
-    const video = document.querySelector('video');
-    video.muted = false;
-    
-    document.addEventListener('click', () => {
-      video.muted = false;
-      video.play();
-    }, { once: true });
+    const video = document.getElementById('myvideo');
+    const msg = document.getElementById('tap-msg');
 
-    video.play().catch(() => {
-      // Autoplay blocked, wait for click
-      video.muted = true;
+    msg.addEventListener('click', () => {
+      msg.style.display = 'none';
+      video.muted = false;
       video.play();
     });
   </script>
+
 </body>
 </html>
